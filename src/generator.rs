@@ -1,4 +1,5 @@
 extern crate rand;
+use rand::rngs::OsRng;
 use rand::Rng;
 use std::collections::HashSet;
 use crate::utils::{CharClass, GeneratorFlag};
@@ -16,12 +17,6 @@ pub struct PasswordGenerator {
 
 impl PasswordGenerator {
     pub fn new() -> Self {
-        let mut excluded = HashSet::new();
-        let chars_to_exclude = ['a', 'b', 'c']; // Add more characters as needed
-        for &ch in chars_to_exclude.iter() {
-            excluded.insert(ch);
-        }
-
         PasswordGenerator {
             default_length: 32,
             default_custom_character_set: "".to_string(),
@@ -30,7 +25,7 @@ impl PasswordGenerator {
             classes: [CharClass::NoClass].iter().cloned().collect(),
             flags: [GeneratorFlag::NoFlags].iter().cloned().collect(),
             custom: "".to_string(),
-            excluded
+            excluded: HashSet::new(),
         }
     }
 
@@ -47,10 +42,14 @@ impl PasswordGenerator {
     }
 
     pub fn generate_password(&self) -> String {
-        let mut rng = rand::thread_rng();
+        let mut rng = OsRng;
         let mut password = String::with_capacity(self.length);
 
         let available_chars: Vec<char> = self.get_available_chars();
+        if available_chars.is_empty() {
+            panic!("No characters available to generate password.");
+        }
+
         for _ in 0..self.length {
             let idx = rng.gen_range(0..available_chars.len());
             password.push(available_chars[idx]);
@@ -71,11 +70,10 @@ impl PasswordGenerator {
             chars.extend('0'..='9');
         }
         if self.classes.contains(&CharClass::SpecialCharacters) {
-            chars.extend("!@#$%^&*()".chars());
+            chars.extend("!@#$%^&*()_+{}[]:;\"'<>,.?/~`|\\-= ".chars());
         }
 
         chars.retain(|ch| !self.excluded.contains(ch));
         chars
     }
 }
-
