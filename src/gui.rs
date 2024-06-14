@@ -1,6 +1,6 @@
 extern crate gtk;
 use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, Box, Button, CheckButton, Entry, Label};
+use gtk::{Application, ApplicationWindow, Box, Button, CheckButton, Entry, TextView, Label};
 use crate::generator::PasswordGenerator;
 use std::collections::HashSet;
 use crate::utils::CharClass;
@@ -30,7 +30,10 @@ pub fn build_ui(app: &Application) {
 
     let generate_button = Button::with_label("Generate Password");
 
-    let result_label = Label::new(None);
+    let result_textview = TextView::new();
+    result_textview.set_editable(false);
+    result_textview.set_cursor_visible(false);
+
     let error_label = Label::new(None);
     error_label.set_halign(gtk::Align::Start);
 
@@ -41,7 +44,7 @@ pub fn build_ui(app: &Application) {
     vbox.pack_start(&numbers_checkbox, false, false, 0);
     vbox.pack_start(&special_chars_checkbox, false, false, 0);
     vbox.pack_start(&generate_button, false, false, 0);
-    vbox.pack_start(&result_label, false, false, 0);
+    vbox.pack_start(&result_textview, false, false, 0);
     vbox.pack_start(&error_label, false, false, 0);
 
     window.add(&vbox);
@@ -85,10 +88,12 @@ pub fn build_ui(app: &Application) {
         generator.set_char_classes(char_classes);
 
         let password = generator.generate_password();
-        result_label.set_text(&password);
+        result_textview.get_buffer().unwrap().set_text(&password);
     });
 
     window.show_all();
 }
+
+
 
 
