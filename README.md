@@ -31,6 +31,13 @@ A straightforward command-line interface provides a quick and easy user experien
 
 *is a lightweight yet powerful tool aiming to fill the gap for a secure, easy-to-use password generator in the Rust ecosystem, taking cues from KeePassXC's reliable approach to password management.*
 
+**Installation** 
+
+    git clone https://github.com/locainin/RustPass.git
+    cd RustPass
+    cargo build --release
+    
+
 # **Acknowledgements**
 
 RustPass is inspired by KeePassXC and aims to bring similar reliability and user-friendliness to the Rust ecosystem. Special thanks to the Rust community for their excellent documentation and support.
