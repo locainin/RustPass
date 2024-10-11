@@ -1,7 +1,7 @@
-// generator.rs
 
 use std::collections::HashSet;
 use crate::utils::CharClass;
+use rand::Rng;
 
 pub struct PasswordGenerator {
     pub length: usize,
@@ -31,7 +31,36 @@ impl PasswordGenerator {
     }
 
     pub fn generate_password(&self) -> String {
-        // Password generation logic
-        "password123".to_string() // Placeholder implementation
+        let mut character_pool = String::new();
+
+        // Add character sets based on selected character classes
+        if self.char_classes.contains(&CharClass::UpperLetters) {
+            character_pool.push_str("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        }
+        if self.char_classes.contains(&CharClass::LowerLetters) {
+            character_pool.push_str("abcdefghijklmnopqrstuvwxyz");
+        }
+        if self.char_classes.contains(&CharClass::Numbers) {
+            character_pool.push_str("0123456789");
+        }
+        if self.char_classes.contains(&CharClass::SpecialCharacters) {
+            character_pool.push_str("!@#$%^&*()_+-=[]{}|;:',.<>?/");
+        }
+
+        // Remove excluded characters from the pool
+        for c in self.excluded_character_set.chars() {
+            character_pool = character_pool.replace(c, "");
+        }
+
+        // Generate password of specified length
+        let mut rng = rand::thread_rng();
+        let password: String = (0..self.length)
+            .map(|_| {
+                let idx = rng.gen_range(0..character_pool.len());
+                character_pool.chars().nth(idx).unwrap()
+            })
+            .collect();
+
+        password
     }
 }
