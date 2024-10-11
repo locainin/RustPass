@@ -1,27 +1,7 @@
-#[derive(Debug, Hash, Eq, PartialEq, Clone)]
+#[derive(Eq, Hash, PartialEq)]
 pub enum CharClass {
-    UpperLetters,
-    LowerLetters,
     Numbers,
+    UpperLetters,   
+    LowerLetters,
     SpecialCharacters,
-    NoClass,
 }
-
-#[derive(Debug, Hash, Eq, PartialEq, Clone)]
-pub enum GeneratorFlag {
-    CharFromEveryGroup,
-    NoFlags,
-}
-
-impl Default for CharClass {
-    fn default() -> Self {
-        CharClass::NoClass
-    }
-}
-
-impl Default for GeneratorFlag {
-    fn default() -> Self {
-        GeneratorFlag::NoFlags
-    }
-}
-

@@ -52,7 +52,7 @@ pub fn build_ui(app: &Application) {
     generate_button.connect_clicked(move |_| {
         error_label.set_text(""); // Clear previous error message
 
-        let length = match length_entry.get_text().parse::<usize>() {
+        let length = match length_entry.text().parse::<usize>() {
             Ok(l) => l,
             Err(_) => {
                 error_label.set_text("Invalid length. Please enter a valid number.");
@@ -60,23 +60,23 @@ pub fn build_ui(app: &Application) {
             }
         };
 
-        let excluded_chars = exclude_entry.get_text().to_string();
+        let excluded_chars = exclude_entry.text().to_string();
         
         let mut generator = PasswordGenerator::new();
         generator.set_length(length);
         generator.set_excluded_character_set(excluded_chars);
 
         let mut char_classes: HashSet<CharClass> = HashSet::new();
-        if upper_case_checkbox.get_active() {
+        if upper_case_checkbox.is_active() {
             char_classes.insert(CharClass::UpperLetters);
         }
-        if lower_case_checkbox.get_active() {
+        if lower_case_checkbox.is_active() {
             char_classes.insert(CharClass::LowerLetters);
         }
-        if numbers_checkbox.get_active() {
+        if numbers_checkbox.is_active() {
             char_classes.insert(CharClass::Numbers);
         }
-        if special_chars_checkbox.get_active() {
+        if special_chars_checkbox.is_active() {
             char_classes.insert(CharClass::SpecialCharacters);
         }
 
@@ -88,12 +88,11 @@ pub fn build_ui(app: &Application) {
         generator.set_char_classes(char_classes);
 
         let password = generator.generate_password();
-        result_textview.get_buffer().unwrap().set_text(&password);
+        result_textview.buffer().unwrap().set_text(&password);
     });
 
     window.show_all();
 }
-
 
 
 

@@ -5,20 +5,19 @@ mod generator;
 mod utils;
 mod gui;
 
-use gtk::prelude::*;
+use gtk::prelude::ApplicationExt;
+use gtk::prelude::ApplicationExtManual;
 use gtk::Application;
-use gio::prelude::*; // Import traits from gio
 
 fn main() {
     let application = Application::new(
         Some("com.example.passwordgenerator"),
         Default::default(),
-    ).expect("failed to initialize GTK application");
+    );
 
     application.connect_activate(|app| {
         gui::build_ui(app);
     });
 
-    application.run(&[]);
+    application.run();
 }
-

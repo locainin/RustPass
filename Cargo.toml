@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-gtk  = "0.9"
-gio = "0.9"
+gtk  = "0.18.1"
+gio = "0.20.4"
 rand = "0.8"
