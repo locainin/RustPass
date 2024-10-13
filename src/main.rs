@@ -4,6 +4,9 @@ extern crate rand;
 mod generator;
 mod utils;
 mod gui;
+mod calculate_password_strength;
+
+
 
 use gtk::prelude::ApplicationExt;
 use gtk::prelude::ApplicationExtManual;
