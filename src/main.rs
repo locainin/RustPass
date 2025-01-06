@@ -1,22 +1,15 @@
-extern crate gtk;
-extern crate rand;
+use gtk4::prelude::*;
+use gtk4::Application;
 
 mod generator;
 mod utils;
 mod gui;
 mod calculate_password_strength;
 
-
-
-use gtk::prelude::ApplicationExt;
-use gtk::prelude::ApplicationExtManual;
-use gtk::Application;
-
 fn main() {
-    let application = Application::new(
-        Some("com.example.passwordgenerator"),
-        Default::default(),
-    );
+    let application = Application::builder()
+        .application_id("passwordgenerator")
+        .build();
 
     application.connect_activate(|app| {
         gui::build_ui(app);

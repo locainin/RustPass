@@ -4,6 +4,27 @@
     font-family: 'Roboto', sans-serif;
 }
 
+/* Header bar */
+headerbar {
+    background: linear-gradient(135deg, #3e3e5c, #1e1e2f);
+    color: #ffffff;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Title + subtitle labels */
+.title-label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FDFDFD;
+    margin-bottom: 4px;
+}
+.subtitle-label {
+    font-size: 13px;
+    color: #dddddd;
+}
+
+/* Text entries */
 entry {
     padding: 12px;
     border-radius: 12px;
@@ -19,6 +40,7 @@ entry:focus {
     box-shadow: 0 6px 12px rgba(102, 187, 106, 0.6);
 }
 
+/* TextView for the password display */
 textview {
     padding: 18px;
     border-radius: 12px;
@@ -32,8 +54,9 @@ textview:hover {
     box-shadow: 0 6px 15px rgba(102, 187, 106, 0.6);
 }
 
-button.suggested-action {
-    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+/* “Generate Password” button */
+button.generate-button {
+    background: linear-gradient(135deg, #ff5722, #e91e63);
     color: #ffffff;
     border-radius: 12px;
     padding: 10px 20px;
@@ -41,17 +64,35 @@ button.suggested-action {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     font-weight: bold;
 }
-button.suggested-action:hover {
+button.generate-button:hover {
+    background: linear-gradient(135deg, #ff7043, #f06292);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* “Copy Password” button */
+button.copy-button {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 10px 20px;
+    transition: background 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    margin-top: 12px; /* Some extra space above the button */
+}
+button.copy-button:hover {
     background: linear-gradient(135deg, #66BB6A, #43A047);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
+/* Error label */
 label.error {
     color: #FF4D4D;
     margin-bottom: 12px;
     font-weight: bold;
 }
 
+/* Progress bar */
 progressbar {
     border-radius: 10px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
@@ -68,6 +109,7 @@ progressbar progress {
     border-radius: 10px;
 }
 
+/* Strength label */
 label.strength-label {
     color: #FFFFFF;
     font-weight: bold;
@@ -75,15 +117,8 @@ label.strength-label {
     margin-top: 8px;
 }
 
+/* Separator line between sections */
 .separator {
     margin: 20px 0;
     border: 1px solid #444;
 }
-
-.header-bar {
-    background: linear-gradient(135deg, #3e3e5c, #1e1e2f);
-    color: #ffffff;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
