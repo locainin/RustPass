@@ -30,7 +30,10 @@ impl PasswordGenerator {
         self.char_classes = char_classes;
     }
 
-    pub fn generate_password(&self) -> String {
+    /// Generate a password using the configured options. If after applying
+    /// the exclusion list no characters remain in the pool this will return an
+    /// error instead of panicking.
+    pub fn generate_password(&self) -> Result<String, &'static str> {
         let mut character_pool = String::new();
 
         // Add character sets based on selected character classes
@@ -52,15 +55,47 @@ impl PasswordGenerator {
             character_pool = character_pool.replace(c, "");
         }
 
+        if character_pool.is_empty() {
+            return Err("No characters available after exclusions");
+        }
+
         // Generate password of specified length
         let mut rng = rand::thread_rng();
         let password: String = (0..self.length)
             .map(|_| {
                 let idx = rng.gen_range(0..character_pool.len());
-                character_pool.chars().nth(idx).unwrap()
+                character_pool
+                    .chars()
+                    .nth(idx)
+                    .expect("index within bounds because character_pool isn't empty")
             })
             .collect();
 
-        password
+        Ok(password)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::collections::HashSet;
+    use std::iter::FromIterator;
+
+    #[test]
+    fn generate_password_empty_pool() {
+        let mut gen = PasswordGenerator::new();
+        gen.set_length(8);
+        gen.set_char_classes(HashSet::from_iter([CharClass::Numbers]));
+        gen.set_excluded_character_set("0123456789".to_string());
+        assert!(gen.generate_password().is_err());
+    }
+
+    #[test]
+    fn generate_password_success() {
+        let mut gen = PasswordGenerator::new();
+        gen.set_length(4);
+        gen.set_char_classes(HashSet::from_iter([CharClass::LowerLetters]));
+        let pwd = gen.generate_password().unwrap();
+        assert_eq!(pwd.len(), 4);
     }
 }

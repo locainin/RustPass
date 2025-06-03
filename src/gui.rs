@@ -205,8 +205,17 @@ pub fn build_ui(app: &Application) {
 
             generator.set_char_classes(char_classes);
 
-            // Generate and display password
-            let password = generator.generate_password();
+            // Generate and display password. If generation fails (e.g. all
+            // characters were excluded) show the error to the user instead of
+            // panicking.
+            let password = match generator.generate_password() {
+                Ok(p) => p,
+                Err(e) => {
+                    error_label.set_visible(true);
+                    error_label.set_text(e);
+                    return;
+                }
+            };
             let buffer = result_textview.buffer();
             buffer.set_text(&password);
 
